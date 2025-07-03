@@ -31,7 +31,6 @@ This approach combines textual information from the scoreboard with audio excite
 3. **Event Combination & Clip Extraction**:
    - Merges timestamps from both audio and OCR detection
    - Creates clips with configurable buffer times before and after events
-   - Intelligently merges overlapping segments
    - Concatenates clips to create the final highlights package
 
 ### Approach 2: YOLO + OCR + Audio + Scene Detection
@@ -41,13 +40,12 @@ This advanced approach integrates object detection, scene analysis, and the prev
 #### How It Works:
 
 1. **YOLO Scoreboard Detection**:
-   - Uses a custom-trained YOLO model to precisely locate scoreboard regions
+   - Custom dataset created from diverse cricket broadcast images for model training
+   - Trained a custom YOLO model on this dataset to precisely locate scoreboard regions
    - Creates tight crops around detected scoreboards
-   - Enhances image preprocessing with resizing and binarization
    - Dramatically improves OCR accuracy by eliminating irrelevant screen areas
 
 2. **Scene Change Detection**:
-   - Processes the entire video to identify natural scene transitions
    - Computes HSV color histograms as frame feature vectors
    - Measures frame-to-frame differences to detect significant visual changes
    - Clusters nearby scene changes to avoid duplicate detection
@@ -55,16 +53,15 @@ This advanced approach integrates object detection, scene analysis, and the prev
 3. **Boundary Optimization**:
    - Adjusts clip start/end points to align with detected scene changes
    - Creates more natural-looking transitions in the final highlights
-   - Falls back to original boundaries when suitable scene changes aren't available
    - Ensures minimum clip length requirements are maintained
 
 4. **Combined Multi-Modal Detection**:
    - Integrates enhanced OCR results with audio analysis
-   - Provides the same event detection as Approach 1 but with higher precision
-   - Reduces false positives through better scoreboard localization
+   - Using the signal produced using OCR and audio analysis we detect a possible highlight segement and from around that time stamp we detect the scene change and create a highlight clip.
+   - Then we merge the clips to create the final highlights video same as approach 1.
 
 ### Other Approaches Explored
-In addition to our main approaches, we explored several alternative methods:
+In addition to our main approaches, we explored several [alternative methods](./code/other_approaches/):
 
 1. Replay Detection Approach
    - Detects broadcaster replay graphics through template matching and histogram comparison
@@ -81,15 +78,19 @@ In addition to our main approaches, we explored several alternative methods:
    - Created dataset and labeling tools for pitch/non-pitch classification
    - Could potentially identify bowling delivery moments and reduce false positives
 
+## Documentation
+
+Along with the [writeup](./writeup.pdf), we created a [presentation](https://www.canva.com/design/DAGlJGSPCLw/aVwEx5h9WHX3_BoGwxVUDw/edit?utm_content=DAGlJGSPCLw&utm_campaign=designshare&utm_medium=link2&utm_source=sharebutton) to showcase our project to the class, which includes visual examples, methodology, and results. 
+
 ## Contributors
-- [Arbaaz-Tanveer](https://github.com/Arbaaz-Tanveer)
+
+- [Arbaaz Tanveer](https://github.com/Arbaaz-Tanveer)
+- [Ayush Dubey](https://github.com/AyushDubey724)
+- [Ayush Kumar Singh](https://github.com/cod-Aks)
 - [Vedhanth Balasubramanian](https://github.com/vedh18)
-- [](https://github.com/sai-krishna-krishna)
-- [](https://github.com/sai-krishna-krishna)
 
 ## Acknowledgements
-This project was completed as part of the EE655: Computer Vision and Deep Learning course at IIT Kanpur under the guidance of Prof. Koteswar Rao Jerripothula during the semester 2024-25 II.
-We recieved a score of 19/20.
+This project was completed as part of the EE655: Computer Vision and Deep Learning course at IIT Kanpur under the guidance of Prof. Koteswar Rao Jerripothula during the semester 2024-25 II. We received a score of **19/20**.
 
 We thank the professor for his valuable guidance and feedback throughout the development of this system.
 
