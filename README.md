@@ -8,7 +8,7 @@ Our project implements two complementary approaches to automatically detect and 
 
 ### Approach 1: OCR + Audio Analysis
 
-This approach combines textual information from the scoreboard with audio excitement detection to identify key moments. Implemented [here.](./code/Generator_with_OCR+Audio.ipynb)
+This approach combines textual information from the scoreboard with audio excitement detection to identify key moments. Implemented [here.](./code/Generator_with_OCR+Audio.ipynb).
 
 #### How It Works:
 
